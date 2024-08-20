@@ -1,5 +1,6 @@
 import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/data/memory/vo/todo_data_holder.dart';
+import 'package:fast_app_base/screen/main/tab/todo/w_todo_item.dart';
 import 'package:flutter/material.dart';
 
 class TodoList extends StatelessWidget {
@@ -14,7 +15,7 @@ class TodoList extends StatelessWidget {
         return todoList.isEmpty
             ? ' 할일을 작성해보세요.'.text.size(30).makeCentered()
             : Column(
-                children: todoList.map((e) => e.title.text.make()).toList(),
+                children: todoList.map((e) => TodoItem(e)).toList(),
               );
       },
     );
