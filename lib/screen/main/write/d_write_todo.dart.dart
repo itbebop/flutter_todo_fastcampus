@@ -1,4 +1,6 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:fast_app_base/common/common.dart';
+import 'package:fast_app_base/common/util/app_keyboard_util.dart';
 import 'package:fast_app_base/common/widget/constant_widget.dart';
 import 'package:fast_app_base/common/widget/scaffold/bottom_dialog_scaffold.dart';
 import 'package:fast_app_base/common/widget/w_round_button.dart';
@@ -14,7 +16,7 @@ class WriteTodoDialog extends DialogWidget {
   DialogState<WriteTodoDialog> createState() => _WriteTodoDialogState();
 }
 
-class _WriteTodoDialogState extends DialogState<WriteTodoDialog> {
+class _WriteTodoDialogState extends DialogState<WriteTodoDialog> with AfterLayoutMixin {
   final DateTime _selectedDate = DateTime.now();
   final textController = TextEditingController();
   final node = FocusNode();
@@ -39,7 +41,11 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> {
             height20,
             Row(
               children: [
-                const Expanded(child: TextField()),
+                Expanded(
+                    child: TextField(
+                  focusNode: node,
+                  controller: textController,
+                )),
                 RoundButton(
                   text: '추가',
                   onTap: () {},
@@ -50,5 +56,10 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> {
         ),
       ),
     );
+  }
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    AppKeyboardUtil.show(context, node);
   }
 }
