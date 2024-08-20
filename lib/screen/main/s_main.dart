@@ -1,7 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:fast_app_base/common/dart/extension/datetime_extension.dart';
 import 'package:fast_app_base/screen/main/tab/tab_item.dart';
 import 'package:fast_app_base/screen/main/tab/tab_navigator.dart';
-import 'package:fast_app_base/screen/main/write/d_write_todo.dart.dart';
+import 'package:fast_app_base/screen/main/write/d_write_todo.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/common.dart';
@@ -49,8 +50,12 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            WriteTodoDialog().show();
+          onPressed: () async {
+            final result = await WriteTodoDialog().show();
+            if (result != null) {
+              debugPrint(result.text);
+              debugPrint(result.dateTime.formattedDate);
+            }
           },
           child: const Icon(EvaIcons.plus),
         ),

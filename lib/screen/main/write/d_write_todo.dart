@@ -1,15 +1,16 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:fast_app_base/common/common.dart';
+import 'package:fast_app_base/common/dart/extension/datetime_extension.dart';
 import 'package:fast_app_base/common/util/app_keyboard_util.dart';
 import 'package:fast_app_base/common/widget/constant_widget.dart';
 import 'package:fast_app_base/common/widget/scaffold/bottom_dialog_scaffold.dart';
 import 'package:fast_app_base/common/widget/w_round_button.dart';
 import 'package:fast_app_base/common/widget/w_rounded_container.dart';
+import 'package:fast_app_base/screen/main/write/vo_write_todo_result.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:nav/dialog/dialog.dart';
 
-class WriteTodoDialog extends DialogWidget {
+class WriteTodoDialog extends DialogWidget<WriteTodoResult> {
   WriteTodoDialog({super.key});
 
   @override
@@ -17,7 +18,7 @@ class WriteTodoDialog extends DialogWidget {
 }
 
 class _WriteTodoDialogState extends DialogState<WriteTodoDialog> with AfterLayoutMixin {
-  final DateTime _selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
   final textController = TextEditingController();
   final node = FocusNode();
 
@@ -32,8 +33,9 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> with AfterLayou
               children: [
                 '할일을 작성해 주세요.'.text.size(18).bold.make(),
                 spacer,
+                _selectedDate.formattedDate.text.make(),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: _selectDate,
                   icon: const Icon(Icons.calendar_month),
                 )
               ],
@@ -48,14 +50,31 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> with AfterLayou
                 )),
                 RoundButton(
                   text: '추가',
-                  onTap: () {},
-                )
+                  onTap: () {
+                    widget.hide(WriteTodoResult(_selectedDate, textController.text));
+                  },
+                ),
               ],
             )
           ],
         ),
       ),
     );
+  }
+
+  void _selectDate() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime.now().subtract(const Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 365 * 10)),
+    );
+    // datePicker에서 받은 값이 null이 아니면 _selectedDate에 세팅
+    if (date != null) {
+      setState(() {
+        _selectedDate = date;
+      });
+    }
   }
 
   @override
