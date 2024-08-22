@@ -14,11 +14,12 @@ class TodoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedContainer(
+      margin: const EdgeInsets.only(bottom: 6),
       color: context.appColors.itemBackground,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          todo.dueDate.formattedDate.text.make(),
+          todo.dueDate.relativeDays.text.make(),
           Row(
             children: [
               TodoStatusWidget(todo),

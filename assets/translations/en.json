@@ -4,5 +4,9 @@
   "clear_cache_done": "Cache has been cleared.",
   "close": "Close",
   "done": "Done",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "tillToday": "till Today",
+  "tillTomorrow": "till Tomorrow",
+  "daysLeft": "{daysCount} left",
+  "daysPassed": "{daysCount} passed"
 }
