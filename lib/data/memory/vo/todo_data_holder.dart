@@ -53,7 +53,7 @@ class TodoDataHolder extends InheritedWidget {
   }
 
   void editTodo(Todo todo) async {
-    final result = await WriteTodoDialog(todoForedit: todo).show();
+    final result = await WriteTodoDialog(todoForEdit: todo).show();
     if (result != null) {
       todo.title = result.text;
       todo.dueDate = result.dateTime;

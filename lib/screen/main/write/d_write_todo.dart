@@ -12,9 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:nav/dialog/dialog.dart';
 
 class WriteTodoDialog extends DialogWidget<WriteTodoResult> {
-  final Todo? todoForedit;
+  final Todo? todoForEdit;
 
-  WriteTodoDialog({this.todoForedit, super.key});
+  WriteTodoDialog({this.todoForEdit, super.key});
 
   @override
   DialogState<WriteTodoDialog> createState() => _WriteTodoDialogState();
@@ -27,9 +27,9 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> with AfterLayou
 
   @override
   void initState() {
-    if (widget.todoForedit != null) {
-      _selectedDate = widget.todoForedit!.dueDate;
-      textController.text = widget.todoForedit!.title;
+    if (widget.todoForEdit != null) {
+      _selectedDate = widget.todoForEdit!.dueDate;
+      textController.text = widget.todoForEdit!.title;
     }
     super.initState();
   }
@@ -61,7 +61,7 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> with AfterLayou
                   controller: textController,
                 )),
                 RoundButton(
-                  text: '추가',
+                  text: isEditMode ? '수정' : '추가',
                   onTap: () {
                     widget.hide(WriteTodoResult(_selectedDate, textController.text));
                   },
@@ -73,6 +73,8 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> with AfterLayou
       ),
     );
   }
+
+  bool get isEditMode => widget.todoForEdit != null;
 
   void _selectDate() async {
     final date = await showDatePicker(
