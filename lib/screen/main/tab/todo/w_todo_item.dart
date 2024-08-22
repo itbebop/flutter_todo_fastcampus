@@ -24,7 +24,11 @@ class TodoItem extends StatelessWidget {
             children: [
               TodoStatusWidget(todo),
               Expanded(child: todo.title.text.size(20).medium.make()),
-              IconButton(onPressed: () async {}, icon: const Icon(EvaIcons.editOutline)),
+              IconButton(
+                  onPressed: () async {
+                    context.holder.editTodo(todo);
+                  },
+                  icon: const Icon(EvaIcons.editOutline)),
             ],
           )
         ],

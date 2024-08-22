@@ -51,6 +51,15 @@ class TodoDataHolder extends InheritedWidget {
       ));
     }
   }
+
+  void editTodo(Todo todo) async {
+    final result = await WriteTodoDialog(todoForedit: todo).show();
+    if (result != null) {
+      todo.title = result.text;
+      todo.dueDate = result.dateTime;
+      notifier.notify();
+    }
+  }
 }
 
 extension TdoDataHolderContextExtension on BuildContext {
