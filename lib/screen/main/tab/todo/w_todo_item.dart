@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/common/dart/extension/datetime_extension.dart';
+import 'package:fast_app_base/common/widget/constant_widget.dart';
 import 'package:fast_app_base/common/widget/w_rounded_container.dart';
 import 'package:fast_app_base/data/memory/vo/vo_todo.dart';
 import 'package:fast_app_base/screen/main/tab/todo/w_todo_status.dart';
@@ -16,8 +17,35 @@ class TodoItem extends StatelessWidget {
     return Dismissible(
       onDismissed: (direction) {
         // notifier에도 데이터 갱신을 해주기 위해서 추가
+        // direction에 따라서 switch문으로 다른 동작추가할 수 있음
         context.holder.removeTodo(todo);
       },
+      background: RoundedContainer(
+        color: context.appColors.removeTodoBg,
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            width20,
+            Icon(
+              EvaIcons.trash2Outline,
+              color: Colors.white,
+            )
+          ],
+        ),
+      ),
+      secondaryBackground: RoundedContainer(
+        color: context.appColors.removeTodoBg,
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(
+              EvaIcons.trash2Outline,
+              color: Colors.white,
+            ),
+            width20
+          ],
+        ),
+      ),
       key: ValueKey(todo.id),
       child: RoundedContainer(
         margin: const EdgeInsets.only(bottom: 6),
