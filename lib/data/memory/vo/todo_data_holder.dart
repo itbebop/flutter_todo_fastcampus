@@ -60,6 +60,11 @@ class TodoDataHolder extends InheritedWidget {
       notifier.notify();
     }
   }
+
+  void removeTodo(Todo todo) {
+    notifier.value.remove(todo);
+    notifier.notify();
+  }
 }
 
 extension TdoDataHolderContextExtension on BuildContext {

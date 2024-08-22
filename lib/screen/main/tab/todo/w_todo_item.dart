@@ -13,26 +13,33 @@ class TodoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RoundedContainer(
-      margin: const EdgeInsets.only(bottom: 6),
-      color: context.appColors.itemBackground,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          todo.dueDate.relativeDays.text.make(),
-          Row(
-            children: [
-              TodoStatusWidget(todo),
-              Expanded(child: todo.title.text.size(20).medium.make()),
-              IconButton(
-                  onPressed: () async {
-                    context.holder.editTodo(todo);
-                  },
-                  icon: const Icon(EvaIcons.editOutline)),
-            ],
-          )
-        ],
-      ).pOnly(top: 15, right: 15, left: 5, bottom: 10),
+    return Dismissible(
+      onDismissed: (direction) {
+        // notifier에도 데이터 갱신을 해주기 위해서 추가
+        context.holder.removeTodo(todo);
+      },
+      key: ValueKey(todo.id),
+      child: RoundedContainer(
+        margin: const EdgeInsets.only(bottom: 6),
+        color: context.appColors.itemBackground,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            todo.dueDate.relativeDays.text.make(),
+            Row(
+              children: [
+                TodoStatusWidget(todo),
+                Expanded(child: todo.title.text.size(20).medium.make()),
+                IconButton(
+                    onPressed: () async {
+                      context.holder.editTodo(todo);
+                    },
+                    icon: const Icon(EvaIcons.editOutline)),
+              ],
+            )
+          ],
+        ).pOnly(top: 15, right: 15, left: 5, bottom: 10),
+      ),
     );
   }
 }
