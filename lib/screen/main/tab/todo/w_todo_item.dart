@@ -3,14 +3,14 @@ import 'package:fast_app_base/common/common.dart';
 import 'package:fast_app_base/common/dart/extension/datetime_extension.dart';
 import 'package:fast_app_base/common/widget/constant_widget.dart';
 import 'package:fast_app_base/common/widget/w_rounded_container.dart';
-import 'package:fast_app_base/data/memory/vo/vo_todo.dart';
+import 'package:fast_app_base/data/memory/vo_todo.dart';
 import 'package:fast_app_base/screen/main/tab/todo/w_todo_status.dart';
 import 'package:flutter/material.dart';
 
 class TodoItem extends StatelessWidget with TodoDataProvider {
   final Todo todo;
 
-  TodoItem(this.todo, {super.key});
+  const TodoItem(this.todo, {super.key});
 
   @override
   Widget build(BuildContext context) {

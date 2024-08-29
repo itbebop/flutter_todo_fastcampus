@@ -1,5 +1,5 @@
-import 'package:fast_app_base/data/memory/vo/todo_status.dart';
-import 'package:fast_app_base/data/memory/vo/vo_todo.dart';
+import 'package:fast_app_base/data/memory/todo_status.dart';
+import 'package:fast_app_base/data/memory/vo_todo.dart';
 import 'package:fast_app_base/screen/dialog/d_confirm.dart';
 import 'package:fast_app_base/screen/main/write/d_write_todo.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
