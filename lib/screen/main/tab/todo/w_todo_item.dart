@@ -7,7 +7,7 @@ import 'package:fast_app_base/data/memory/vo_todo.dart';
 import 'package:fast_app_base/screen/main/tab/todo/w_todo_status.dart';
 import 'package:flutter/material.dart';
 
-class TodoItem extends StatelessWidget with TodoDataProvider {
+class TodoItem extends StatelessWidget {
   final Todo todo;
 
   const TodoItem(this.todo, {super.key});
@@ -18,7 +18,7 @@ class TodoItem extends StatelessWidget with TodoDataProvider {
       onDismissed: (direction) {
         // notifier에도 데이터 갱신을 해주기 위해서 추가
         // direction에 따라서 switch문으로 다른 동작추가할 수 있음
-        todoData.removeTodo(todo);
+        context.readTodoCubit.removeTodo(todo);
       },
       background: RoundedContainer(
         color: context.appColors.removeTodoBg,
@@ -60,7 +60,7 @@ class TodoItem extends StatelessWidget with TodoDataProvider {
                 Expanded(child: todo.title.text.size(20).medium.make()),
                 IconButton(
                     onPressed: () async {
-                      todoData.editTodo(todo);
+                      context.readTodoCubit.editTodo(todo);
                     },
                     icon: const Icon(EvaIcons.editOutline)),
               ],
