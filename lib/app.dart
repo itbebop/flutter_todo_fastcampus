@@ -4,6 +4,7 @@ import 'package:fast_app_base/data/memory/todo_bloc.dart';
 import 'package:fast_app_base/screen/main/s_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'common/theme/custom_theme.dart';
 
@@ -40,8 +41,7 @@ class AppState extends State<App> with Nav, WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return CustomThemeApp(
       child: Builder(builder: (context) {
-        return BlocProvider(
-          create: (BuildContext context) => TodoBloc(),
+        return ProviderScope(
           child: MaterialApp(
             navigatorKey: App.navigatorKey,
             localizationsDelegates: context.localizationDelegates,
