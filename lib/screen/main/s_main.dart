@@ -1,4 +1,5 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:fast_app_base/data/memory/bloc/todo_event.dart';
 import 'package:fast_app_base/screen/main/tab/tab_item.dart';
 import 'package:fast_app_base/screen/main/tab/tab_navigator.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            context.readTodoCubit.addTodo(); // Get의 find역할을 하는 것
+            context.readTodoBloc.add(TodoAddEvent()); // Get의 find역할을 하는 것
           },
           child: const Icon(EvaIcons.plus),
         ),

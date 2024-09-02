@@ -1,15 +1,20 @@
 import 'package:fast_app_base/data/memory/bloc/bloc_status.dart';
 import 'package:fast_app_base/data/memory/bloc/todo_bloc_state.dart';
+import 'package:fast_app_base/data/memory/bloc/todo_event.dart';
 import 'package:fast_app_base/data/memory/todo_status.dart';
 import 'package:fast_app_base/data/memory/vo_todo.dart';
 import 'package:fast_app_base/screen/dialog/d_confirm.dart';
 import 'package:fast_app_base/screen/main/write/d_write_todo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TodoCubit extends Cubit<TodoBlocState> {
-  //TodoCubit(super.initialState);
-  TodoCubit() : super(const TodoBlocState(BlocStatus.initial, todoList: <Todo>[]));
-  void addTodo() async {
+class TodoBloc extends Bloc<TodoEvent, TodoBlocState> {
+  TodoBloc() : super(const TodoBlocState(BlocStatus.initial, todoList: <Todo>[])) {
+    on<TodoAddEvent>(_addTodo);
+    on<TodoStatusUpdateEvent>(_changeTodoStatus);
+    on<TodoContentUpdateEvent>(_editTodo);
+    on<TodoRemoveEvent>(_removeTodo);
+  }
+  void _addTodo(TodoAddEvent event, Emitter<TodoBlocState> emit) async {
     final result = await WriteTodoDialog().show();
     // mounted 체크 안해도 WriteTodoDialog가 뜨고 사라졌을 때 나온다는 게 흐름상 보장됨
     if (result != null) {
@@ -20,12 +25,13 @@ class TodoCubit extends Cubit<TodoBlocState> {
         dueDate: result.dateTime,
         createdTime: DateTime.now(),
       ));
-      emitNewList(copiedOldTodoList);
+      emitNewList(copiedOldTodoList, emit);
     }
   }
 
-  void changeTodoStatus(Todo todo) async {
+  void _changeTodoStatus(TodoStatusUpdateEvent event, Emitter<TodoBlocState> emit) async {
     final copiedOldTodoList = List.of(state.todoList); // state는 변경이 안되므로, 수정이 가능한 List를 만듬
+    final todo = event.updatedTodo;
     final todoIndex = copiedOldTodoList.indexWhere((element) => element.id == todo.id); // todo가 존재하는 위치 파악
 
     TodoStatus status = todo.status;
@@ -43,10 +49,11 @@ class TodoCubit extends Cubit<TodoBlocState> {
     }
     copiedOldTodoList[todoIndex] = todo.copyWith(status: status);
 
-    emitNewList(copiedOldTodoList);
+    emitNewList(copiedOldTodoList, emit);
   }
 
-  void editTodo(Todo todo) async {
+  void _editTodo(TodoContentUpdateEvent event, Emitter<TodoBlocState> emit) async {
+    final todo = event.updatedTodo;
     final result = await WriteTodoDialog(todoForEdit: todo).show();
     if (result != null) {
       todo.title = result.text;
@@ -58,17 +65,18 @@ class TodoCubit extends Cubit<TodoBlocState> {
         dueDate: result.dateTime,
         modifyTime: DateTime.now(),
       );
-      emitNewList(oldCopiedList);
+      emitNewList(oldCopiedList, emit);
     }
   }
 
-  void removeTodo(Todo todo) {
+  void _removeTodo(TodoRemoveEvent event, Emitter<TodoBlocState> emit) {
     final oldCopiedList = List<Todo>.from(state.todoList);
+    final todo = event.removedTodo;
     oldCopiedList.removeWhere((element) => element.id == todo.id);
-    emitNewList(oldCopiedList);
+    emitNewList(oldCopiedList, emit);
   }
 
-  void emitNewList(List<Todo> oldCopiedList) {
+  void emitNewList(List<Todo> oldCopiedList, Emitter<TodoBlocState> emit) {
     emit(state.copyWith(todoList: oldCopiedList));
   }
 }
