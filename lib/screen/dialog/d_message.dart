@@ -1,7 +1,7 @@
 import 'package:fast_app_base/common/widget/scaffold/center_dialog_scaffold.dart';
 import 'package:fast_app_base/data/simple_result.dart';
 import 'package:flutter/material.dart';
-import 'package:nav/dialog/dialog.dart';
+import 'package:nav_hooks/dialog/dialog.dart';
 
 import '../../common/common.dart';
 
@@ -37,8 +37,7 @@ class _MessageDialogState extends DialogState<MessageDialog> {
     return CenterDialogScaffold(
         body: Container(
             constraints: BoxConstraints(maxHeight: context.deviceHeight),
-            decoration: BoxDecoration(
-                color: context.appColors.drawerBg, borderRadius: BorderRadius.circular(15)),
+            decoration: BoxDecoration(color: context.appColors.drawerBg, borderRadius: BorderRadius.circular(15)),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -50,10 +49,7 @@ class _MessageDialogState extends DialogState<MessageDialog> {
                         padding: const EdgeInsets.all(20.0),
                         child: Text(
                           widget.message!,
-                          style: TextStyle(
-                              fontSize: widget.fontSize,
-                              height: 1.8,
-                              color: context.appColors.text),
+                          style: TextStyle(fontSize: widget.fontSize, height: 1.8, color: context.appColors.text),
                           textAlign: widget.textAlign,
                         ),
                       ),

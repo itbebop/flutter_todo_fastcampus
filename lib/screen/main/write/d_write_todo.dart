@@ -9,7 +9,7 @@ import 'package:fast_app_base/common/widget/w_rounded_container.dart';
 import 'package:fast_app_base/data/memory/vo_todo.dart';
 import 'package:fast_app_base/screen/main/write/vo_write_todo_result.dart';
 import 'package:flutter/material.dart';
-import 'package:nav/dialog/dialog.dart';
+import 'package:nav_hooks/dialog/dialog.dart';
 
 class WriteTodoDialog extends DialogWidget<WriteTodoResult> {
   final Todo? todoForEdit;
